@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../style.css">
+  <title>羽ばたき飛行ロボット</title>
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/photoswipe@5/dist/photoswipe.css"
+  >
+
+  <script>
+    async function checkPageExists(event, url) {
+      event.preventDefault(); // デフォルトの遷移を防止
+      try {
+        const response = await fetch(url);
+        if (response.ok) {
+          window.location.href = url;
+        } else {
+          window.location.href = '404.html';
+        }
+      } catch (error) {
+        window.location.href = '404.html';
+      }
+    }
+  </script>
+</head>
+<body>
+  <header>
+    <h1>力覚を利用する羽ばたき飛行ロボットの開発</h1>
+  </header>
+
+  <main>
+    <section id="overview">
+      <h2>概要</h2>
+      <p>
+        鳥類にインスパイアされた羽ばたき飛行ロボットは，プロペラを必要としないため物理的な接触に強く，乱雑な環境での飛行を可能にし人間や動植物と協働することができる．
+        通常，羽ばたき飛行は非線形でモデル化が複雑なため，制御が難しい．
+        よく知られる現象は，地面効果による揚力増加である．
+        このような効果を利用するソリューションとして，羽ばたき翼による力覚センシングを提案する．
+      </p>
+    </section>
+
+    <section id="senswing">
+      <h2>Senswingの提案</h2>
+      <p>
+        これまでに，羽ばたき翼に力覚センサを組み込むことで，風力を検知するシステムを開発した．<br>
+        - 揚力と推力を測定するために力センサーを軽量に取り付けるための機械的な設計をした．<br>
+        - 提案システムを用いて羽ばたき中の風速変化を検知できることを示した．
+      </p>
+      <div class="my-gallery">
+        <a href="../images/loadcell-system.png"
+           data-pswp-width="1200"
+           data-pswp-height="800">
+          <img src="../images/loadcell-system.png"
+               alt="Senswing"
+               width="300">
+        </a>
+        <a href="../images/senswing.png"
+           data-pswp-width="1200"
+           data-pswp-height="800">
+          <img src="../images/senswing.png"
+               alt="Senswing"
+               width="250">
+        </a>
+      </div>
+    </section>
+
+    <section id="アナログフロントエンドボードの開発">
+      <h2>アナログフロントエンドボードの設計</h2>
+      <p>
+        計8chのひずみデータを処理するためのアナログフロントエンドボードを開発した．<br>
+        このボードは，ひずみゲージの出力を増幅・AD変換し，デジタル信号としてマイコンに送信する．
+      </p>
+        
+        <a href="../images/strain-board.png"
+           data-pswp-width="1200"
+           data-pswp-height="800">
+          <img src="../images/strain-board.png"
+               alt="Senswing"
+               width="200">
+        </a>
+    </section>
+
+    <section id="videos">
+      <h2>機体の開発</h2>
+      <p>
+        提案システムを搭載するためのモックアップを設計した．<br>
+        このモックアップは高いペイロードを有しており，羽ばたき飛行ロボットの開発において重要な役割を果たす．
+      </p>
+      <div class="video-container">
+        <iframe
+          src="https://www.youtube.com/embed/t4b2sUjoVjY"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </section>
+
+    <section id="system design">
+      <h2>システム設計</h2>
+      <p>
+        飛行中のデータを収集するシステムを開発した．
+        IMU, GNSS, 力覚データを保存し，飛行中の状態を分析する．
+        データはSDカードに保存されるだけでなく，定期的にFTPサーバにアップロードされる．
+      </p>
+      <a href="../images/Senswing System.svg"
+      data-pswp-width="800"
+      data-pswp-height="800">
+     <img src="../images/Senswing System.svg"
+          alt="Senswing" 
+          width="600">
+   </a>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Hidaka Sato</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@5/dist/photoswipe.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@5/dist/photoswipe-lightbox.umd.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const lightbox = new PhotoSwipeLightbox({
+        gallery: '.my-gallery',   // .my-galleryクラスを持つ要素をギャラリーとする
+        children: 'a',            // その中の<a>タグを1枚ずつの画像として認識
+        pswpModule: PhotoSwipe,   // PhotoSwipe本体
+        loop: true,               // 最後の画像から最初に戻れる
+        closeOnVerticalDrag: true // 上下スワイプで閉じる
+      });
+      lightbox.init();
+    });
+  </script>
+</body>
+</html>
